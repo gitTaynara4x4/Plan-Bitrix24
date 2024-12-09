@@ -382,12 +382,26 @@ CITIES_API_PRATA = [  "BOA ESPERANÇA - MG",
   "DOURADOS - MS"
 ]
 
+CITIES_API_REDE_NEUTRA = [
+    "APARECIDA DE GOIANIA - GO",
+    "BELO HORIZONTE - MG",
+    "CONTAGEM - MG",
+    "GOIANIA - MG",
+    "SENADOR CANEDO - GO",
+    "SETE LAGOAS - MG",
+    "TRINDADE - GO",
+    "UBÁ - MG",
+    "RIBEIRÃO DAS NEVES - MG"
+]
+
 # Função para obter a URL da API com base na cidade
 def get_api_url(cidade):
     if cidade in CITIES_API_OURO:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowouro"
     elif cidade in CITIES_API_PADRAO:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowpadrao"
+    elif cidade in CITIES_API_REDE_NEUTRA:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowredeneutra"
     elif cidade in CITIES_API_PRATA:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowprata"
     else:
