@@ -414,7 +414,7 @@ def atualizar_campo_e_chamar_api(cidade, entity_id):
         return "Cidade não mapeada."
 
 # Ajuste na chamada da função
-@app.route('/update-plan/<string:entity_id>', methods=['GET'])
+@app.route('/update-plan/<string:entity_id>', methods=['POST'])
 def update_plan(entity_id):
     try:
         # URL para buscar os dados da negociação
