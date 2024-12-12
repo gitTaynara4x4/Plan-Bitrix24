@@ -391,7 +391,8 @@ CITIES_API_REDE_NEUTRA = [
     "SETE LAGOAS - MG",
     "TRINDADE - GO",
     "UBÁ - MG",
-    "RIBEIRÃO DAS NEVES - MG"
+    "RIBEIRÃO DAS NEVES - MG",
+    "BETIM - MG"
 ]
 
 # Função para obter a URL da API com base na cidade
