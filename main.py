@@ -280,7 +280,7 @@ def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
 @app.route('/update-plan-desktop/<string:entity_id>', methods=['POST'])
 def update_plan_desktop(entity_id):
     try:
-        get_deal_url: f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
+        get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
         get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
         get_deal_data = get_deal_response.json() 
 
@@ -334,7 +334,7 @@ def update_plan_desktop(entity_id):
 @app.route('/update-plan-giga/<string:entity_id>', methods=['POST'])
 def update_plan_giga(entity_id):
     try:
-        # URL para buscar os dados da negociação
+
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
         get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
         get_deal_data = get_deal_response.json()
@@ -363,7 +363,7 @@ def update_plan_giga(entity_id):
         
         value_to_update = matched_item["VALUE"]
 
-        # Atualiza o campo no CRM
+ 
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
         update_response = requests.post(update_url, json={
             "id": entity_id,
