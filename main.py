@@ -320,7 +320,7 @@ def update_plan_desktop(entity_id):
         update_data = update_response.json()
 
         if update_data.get("result") == True:
-            api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
+            api_response = atualizar_campo_e_chamar_api_desktop(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
             return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
