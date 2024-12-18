@@ -239,7 +239,7 @@ def atualizar_campo_e_chamar_api_desktop(cidade, entity_id):
 
     atualizar_campo_no_crm(entity_id)
 
-    url_api = get_api_url_giga(cidade)
+    url_api = get_api_url_desktop(cidade)
     
     if url_api:
         response = requests.post(f"{url_api}?deal_id={entity_id}", json={"cidade": cidade})
