@@ -1,3 +1,4 @@
+
 from flask import Flask, request, jsonify
 import requests
 from dotenv import load_dotenv
@@ -14,6 +15,16 @@ PROFILE = os.getenv('PROFILE')
 BASE_URL_API_BITRIX = os.getenv('BASE_URL_API_BITRIX')
 
 BITRIX_WEBHOOK_URL = f"{BASE_URL_API_BITRIX}/{PROFILE}/{CODIGO_BITRIX}/"
+
+
+def log_erro(mensagem, e=None):
+    """ Função de log de erro para registrar exceções """
+    import traceback
+    erro_detalhado = traceback.format_exc()
+    print(f"\n[ERRO] {mensagem}")
+    if e:
+        print(f"[DETALHES] {str(e)}")
+    print(f"[TRACEBACK] {erro_detalhado}\n")
 
 # CIDADES DA OPERADORA VERO - INTERNET 
 CITIES_API_OURO = [
@@ -232,7 +243,6 @@ def get_api_url_vero(cidade):
 
 
 def atualizar_campo_no_crm(dados):
-
     pass
 
 def atualizar_campo_e_chamar_api_desktop(cidade, entity_id):
@@ -275,6 +285,8 @@ def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
         return response
     else:
         return "Cidade não mapeada."
+
+
 
 
 @app.route('/update-plan-desktop/<string:entity_id>', methods=['POST'])
@@ -321,14 +333,23 @@ def update_plan_desktop(entity_id):
         
         update_data = update_response.json()
 
-        if update_data.get("result") == True:
+        if update_data.get("result"):
             api_response = atualizar_campo_e_chamar_api_desktop(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
             return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
 
+    except requests.exceptions.RequestException as e:
+        log_erro("Erro de conexão com o Bitrix24", e)
+        return jsonify({"error": "Erro de conexão com o servidor"}), 500
+
+    except KeyError as e:
+        log_erro("Erro ao tentar acessar um campo de dados inexistente", e)
+        return jsonify({"error": "Erro ao acessar um campo inexistente", "details": str(e)}), 500
+
     except Exception as e:
-        return jsonify({"error": "Erro interno", "details": str(e)}), 500
+        log_erro("Erro interno", e)
+        return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
 
 
         
@@ -378,14 +399,25 @@ def update_plan_giga(entity_id):
         time.sleep(2)
         update_data = update_response.json()
 
-        if update_data.get("result") == True:
+        if update_data.get("result")
             api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
             return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
 
+    except requests.exceptions.RequestException as e:
+        log_erro("Erro de conexão com o Bitrix24", e)
+        return jsonify({"error": "Erro de conexão com o servidor"}), 500
+
+    except KeyError as e:
+        log_erro("Erro ao tentar acessar um campo de dados inexistente", e)
+        return jsonify({"error": "Erro ao acessar um campo inexistente", "details": str(e)}), 500
+
     except Exception as e:
-        return jsonify({"error": "Erro interno", "details": str(e)}), 500
+        log_erro("Erro interno", e)
+        return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+
+
 
 
 
@@ -433,15 +465,26 @@ def update_plan_vero(entity_id):
         
         update_data = update_response.json()
 
-        if update_data.get("result") == True:
+        if update_data.get("result")
             # Agora a função recebe o entity_id
             api_response = atualizar_campo_e_chamar_api_vero(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
             return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
 
+    except requests.exceptions.RequestException as e:
+        log_erro("Erro de conexão com o Bitrix24", e)
+        return jsonify({"error": "Erro de conexão com o servidor"}), 500
+
+    except KeyError as e:
+        log_erro("Erro ao tentar acessar um campo de dados inexistente", e)
+        return jsonify({"error": "Erro ao acessar um campo inexistente", "details": str(e)}), 500
+
     except Exception as e:
-        return jsonify({"error": "Erro interno", "details": str(e)}), 500
+        log_erro("Erro interno", e)
+        return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+
+
         
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5711)
