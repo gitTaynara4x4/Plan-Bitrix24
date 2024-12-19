@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 import requests
 from dotenv import load_dotenv
@@ -399,7 +398,7 @@ def update_plan_giga(entity_id):
         time.sleep(2)
         update_data = update_response.json()
 
-        if update_data.get("result")
+        if update_data.get("result"):
             api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
@@ -465,7 +464,7 @@ def update_plan_vero(entity_id):
         
         update_data = update_response.json()
 
-        if update_data.get("result")
+        if update_data.get("result"):
             # Agora a função recebe o entity_id
             api_response = atualizar_campo_e_chamar_api_vero(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
