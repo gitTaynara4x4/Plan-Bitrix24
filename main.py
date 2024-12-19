@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 import os
 import time
 
-
 app = Flask(__name__)
 
 load_dotenv()
@@ -311,6 +310,7 @@ def update_plan_desktop(entity_id):
         
         value_to_update = matched_item["VALUE"]
 
+
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
         update_response = requests.post(update_url, json={
             "id": entity_id,
@@ -318,7 +318,7 @@ def update_plan_desktop(entity_id):
                 "UF_CRM_1733493949": value_to_update
             }
         })
-        time.sleep(2) 
+        
         update_data = update_response.json()
 
         if update_data.get("result") == True:
@@ -330,9 +330,13 @@ def update_plan_desktop(entity_id):
     except Exception as e:
         return jsonify({"error": "Erro interno", "details": str(e)}), 500
 
+
+        
+
 @app.route('/update-plan-giga/<string:entity_id>', methods=['POST'])
 def update_plan_giga(entity_id):
     try:
+
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
         get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
         time.sleep(2)
@@ -363,6 +367,7 @@ def update_plan_giga(entity_id):
         
         value_to_update = matched_item["VALUE"]
 
+ 
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
         update_response = requests.post(update_url, json={
             "id": entity_id,
@@ -374,13 +379,15 @@ def update_plan_giga(entity_id):
         update_data = update_response.json()
 
         if update_data.get("result") == True:
-            api_response = atualizar_campo_e_chamar_api_desktop(value_to_update, entity_id)
+            api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
             return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
 
     except Exception as e:
         return jsonify({"error": "Erro interno", "details": str(e)}), 500
+
+
 
 @app.route('/update-plan-vero/<string:entity_id>', methods=['POST'])
 def update_plan_vero(entity_id):
@@ -426,15 +433,15 @@ def update_plan_vero(entity_id):
         
         update_data = update_response.json()
 
-
         if update_data.get("result") == True:
-            api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
+            # Agora a função recebe o entity_id
+            api_response = atualizar_campo_e_chamar_api_vero(value_to_update, entity_id)
             return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
         else:
             return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
 
     except Exception as e:
         return jsonify({"error": "Erro interno", "details": str(e)}), 500
-
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5711)
