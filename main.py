@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import requests
 from dotenv import load_dotenv
 import os
+import time
 
 
 app = Flask(__name__)
@@ -282,6 +283,7 @@ def update_plan_desktop(entity_id):
     try:
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
         get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
+        time.sleep(2)
         get_deal_data = get_deal_response.json() 
 
         if 'result' not in get_deal_data:
@@ -293,6 +295,7 @@ def update_plan_desktop(entity_id):
 
         get_fields_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.fields"
         get_fields_response = requests.get(get_fields_url)
+        time.sleep(2)  
         get_fields_data = get_fields_response.json()
 
         if 'result' not in get_fields_data:
@@ -308,7 +311,6 @@ def update_plan_desktop(entity_id):
         
         value_to_update = matched_item["VALUE"]
 
-
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
         update_response = requests.post(update_url, json={
             "id": entity_id,
@@ -316,7 +318,7 @@ def update_plan_desktop(entity_id):
                 "UF_CRM_1733493949": value_to_update
             }
         })
-        
+        time.sleep(2) 
         update_data = update_response.json()
 
         if update_data.get("result") == True:
@@ -328,15 +330,12 @@ def update_plan_desktop(entity_id):
     except Exception as e:
         return jsonify({"error": "Erro interno", "details": str(e)}), 500
 
-
-        
-
 @app.route('/update-plan-giga/<string:entity_id>', methods=['POST'])
 def update_plan_giga(entity_id):
     try:
-
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
         get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
+        time.sleep(2)
         get_deal_data = get_deal_response.json()
 
         if 'result' not in get_deal_data:
@@ -348,6 +347,7 @@ def update_plan_giga(entity_id):
         
         get_fields_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.fields"
         get_fields_response = requests.get(get_fields_url)
+        time.sleep(2)
         get_fields_data = get_fields_response.json()
 
         if 'result' not in get_fields_data: 
@@ -363,7 +363,6 @@ def update_plan_giga(entity_id):
         
         value_to_update = matched_item["VALUE"]
 
- 
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
         update_response = requests.post(update_url, json={
             "id": entity_id,
@@ -371,7 +370,7 @@ def update_plan_giga(entity_id):
                 "UF_CRM_1733493949": value_to_update
             }
         })
-        
+        time.sleep(2)
         update_data = update_response.json()
 
         if update_data.get("result") == True:
@@ -383,59 +382,5 @@ def update_plan_giga(entity_id):
     except Exception as e:
         return jsonify({"error": "Erro interno", "details": str(e)}), 500
 
-
-
-@app.route('/update-plan-vero/<string:entity_id>', methods=['POST'])
-def update_plan_vero(entity_id):
-    try:
-        get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
-        get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
-        get_deal_data = get_deal_response.json()
-
-        if 'result' not in get_deal_data:
-            return jsonify({"error":"Falha ao buscar os dados da negociação", "details": get_deal_data}), 400
-        
-        field_id = get_deal_data['result'].get("UF_CRM_1709042046")
-        if not field_id:
-            return jsonify({"error": "Campo Cidade List está vazio"}), 400
-        
-        get_fields_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.fields"
-        get_fields_response = requests.get(get_fields_url)
-        get_fields_data = get_fields_response.json()
-
-        if 'result' not in get_fields_data: 
-            return jsonify({"error": "Falha ao buscar os campos disponíveis", "details": get_fields_data}), 400
-        
-        fields_items = get_fields_data['result'].get("UF_CRM_1709042046", {}).get("items", [])
-        if not fields_items:
-            return jsonify({"error": " O campo Cidade está Vazio"}), 400
-        
-        matched_item = next((item for item in fields_items if item["ID"] == field_id), None)
-        if not matched_item: 
-            return jsonify({"error": f"ID {field_id} não encontrado na lista de itens do campo"}), 400
-        
-        value_to_update = matched_item["VALUE"]
-
-        # Atualiza o campo no CRM
-        update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
-        update_response = requests.post(update_url, json={
-            "id": entity_id,
-            "fields": {
-                "UF_CRM_1733493949": value_to_update
-            }
-        })
-        
-        update_data = update_response.json()
-
-        if update_data.get("result") == True:
-            # Agora a função recebe o entity_id
-            api_response = atualizar_campo_e_chamar_api_vero(value_to_update, entity_id)
-            return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
-        else:
-            return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
-
-    except Exception as e:
-        return jsonify({"error": "Erro interno", "details": str(e)}), 500
-        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5711)
