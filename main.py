@@ -17,6 +17,8 @@ BASE_URL_API_BITRIX = os.getenv('BASE_URL_API_BITRIX')
 BITRIX_WEBHOOK_URL = f"{BASE_URL_API_BITRIX}/{PROFILE}/{CODIGO_BITRIX}/"
 
 
+
+
 def log_erro(mensagem, e=None):
     """ Função de log de erro para registrar exceções """
     import traceback
@@ -286,197 +288,140 @@ def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
         return {"error": "Cidade não mapeada"}
 
 
+
+def make_request_with_retries(method, url, **kwargs):
+    max_retries = 5  
+    for attempt in range(max_retries):
+        try:
+            response = requests.request(method, url, **kwargs)
+            if response.status_code in [200, 201]:  
+                return response
+            else:
+                log_erro(f"Erro {response.status_code} na tentativa {attempt + 1}", response.text)
+        except requests.exceptions.RequestException as e:
+            log_erro("Erro de conexão", e)
+        time.sleep(2)  
+    return None
+
+
+def handle_request_errors(response, error_message, details=None):
+    if response is None or response.status_code >= 400:
+        return jsonify({"error": error_message, "details": details or response.text if response else "Nenhuma resposta"}), 400
+
+
+
 @app.route('/update-plan-desktop/<string:entity_id>', methods=['POST'])
 def update_plan_desktop(entity_id):
     try:
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
-        get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
-        time.sleep(2)
-        get_deal_data = get_deal_response.json() 
-
-        if 'result' not in get_deal_data:
-            return jsonify({"error":"Falha ao buscar os dados da negociação", "details": get_deal_data}), 400
+        get_deal_response = make_request_with_retries('GET', get_deal_url, params={"id": entity_id})
+        handle_request_errors(get_deal_response, "Falha ao buscar os dados da negociação")
+        get_deal_data = get_deal_response.json()
 
         field_id = get_deal_data['result'].get("UF_CRM_1709042046")
         if not field_id:
             return jsonify({"error": "Campo Cidade List está vazio"}), 400
 
         get_fields_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.fields"
-        get_fields_response = requests.get(get_fields_url)
-        time.sleep(2)  
+        get_fields_response = make_request_with_retries('GET', get_fields_url)
+        handle_request_errors(get_fields_response, "Falha ao buscar os campos disponíveis")
         get_fields_data = get_fields_response.json()
 
-        if 'result' not in get_fields_data:
-            return jsonify({"error": "Falha ao buscar os campos disponíveis", "details": get_fields_data}), 400
-
         fields_items = get_fields_data['result'].get("UF_CRM_1709042046", {}).get("items", [])
-        if not fields_items:
-            return jsonify({"error": " O campo Cidade está Vazio"}), 400
-        
         matched_item = next((item for item in fields_items if item["ID"] == field_id), None)
-        if not matched_item: 
+        if not matched_item:
             return jsonify({"error": f"ID {field_id} não encontrado na lista de itens do campo"}), 400
-        
+
         value_to_update = matched_item["VALUE"]
 
-
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
-        update_response = requests.post(update_url, json={
+        update_response = make_request_with_retries('POST', update_url, json={
             "id": entity_id,
-            "fields": {
-                "UF_CRM_1733493949": value_to_update
-            }
+            "fields": {"UF_CRM_1733493949": value_to_update}
         })
+        handle_request_errors(update_response, "Falha ao atualizar o campo")
         
-        update_data = update_response.json()
-
-        if update_data.get("result"):
-            api_response = atualizar_campo_e_chamar_api_desktop(value_to_update, entity_id)
-            return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
-        else:
-            return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
-
-    except requests.exceptions.RequestException as e:
-        log_erro("Erro de conexão com o Bitrix24", e)
-        return jsonify({"error": "Erro de conexão com o servidor"}), 500
-
-    except KeyError as e:
-        log_erro("Erro ao tentar acessar um campo de dados inexistente", e)
-        return jsonify({"error": "Erro ao acessar um campo inexistente", "details": str(e)}), 500
+        api_response = atualizar_campo_e_chamar_api_desktop(value_to_update, entity_id)
+        return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
 
     except Exception as e:
         log_erro("Erro interno", e)
         return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
 
-
-        
 
 @app.route('/update-plan-giga/<string:entity_id>', methods=['POST'])
 def update_plan_giga(entity_id):
     try:
-
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
-        get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
-        time.sleep(2)
+        get_deal_response = make_request_with_retries('GET', get_deal_url, params={"id": entity_id})
+        handle_request_errors(get_deal_response, "Falha ao buscar os dados da negociação")
         get_deal_data = get_deal_response.json()
 
-        if 'result' not in get_deal_data:
-            return jsonify({"error":"Falha ao buscar os dados da negociação", "details": get_deal_data}), 400
-        
         field_id = get_deal_data['result'].get("UF_CRM_1709042046")
         if not field_id:
             return jsonify({"error": "Campo Cidade List está vazio"}), 400
-        
+
         get_fields_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.fields"
-        get_fields_response = requests.get(get_fields_url)
-        time.sleep(2)
+        get_fields_response = make_request_with_retries('GET', get_fields_url)
+        handle_request_errors(get_fields_response, "Falha ao buscar os campos disponíveis")
         get_fields_data = get_fields_response.json()
 
-        if 'result' not in get_fields_data: 
-            return jsonify({"error": "Falha ao buscar os campos disponíveis", "details": get_fields_data}), 400
-        
         fields_items = get_fields_data['result'].get("UF_CRM_1709042046", {}).get("items", [])
-        if not fields_items:
-            return jsonify({"error": " O campo Cidade está Vazio"}), 400
-        
         matched_item = next((item for item in fields_items if item["ID"] == field_id), None)
-        if not matched_item: 
-            return jsonify({"error": f"ID {field_id} não encontrado na lista de itens do campo"}), 400
         
-        value_to_update = matched_item["VALUE"]
+        value_to_update = matched_item["VALUE"] if matched_item else None
 
- 
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
-        update_response = requests.post(update_url, json={
+        update_response = make_request_with_retries('POST', update_url, json={
             "id": entity_id,
-            "fields": {
-                "UF_CRM_1733493949": value_to_update
-            }
+            "fields": {"UF_CRM_1733493949": value_to_update}
         })
-        time.sleep(2)
-        update_data = update_response.json()
-
-        if update_data.get("result"):
-            api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
-            return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
-        else:
-            return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
-
-    except requests.exceptions.RequestException as e:
-        log_erro("Erro de conexão com o Bitrix24", e)
-        return jsonify({"error": "Erro de conexão com o servidor"}), 500
-
-    except KeyError as e:
-        log_erro("Erro ao tentar acessar um campo de dados inexistente", e)
-        return jsonify({"error": "Erro ao acessar um campo inexistente", "details": str(e)}), 500
+        handle_request_errors(update_response, "Falha ao atualizar o campo")
+        
+        api_response = atualizar_campo_e_chamar_api_giga(value_to_update, entity_id)
+        return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
 
     except Exception as e:
         log_erro("Erro interno", e)
         return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
 
-
-        
 
 @app.route('/update-plan-vero/<string:entity_id>', methods=['POST'])
 def update_plan_vero(entity_id):
     try:
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
-        get_deal_response = requests.get(get_deal_url, params={"id": entity_id})
-        time.sleep(2)
+        get_deal_response = make_request_with_retries('GET', get_deal_url, params={"id": entity_id})
+        handle_request_errors(get_deal_response, "Falha ao buscar os dados da negociação")
         get_deal_data = get_deal_response.json()
 
-        if 'result' not in get_deal_data:
-            return jsonify({"error":"Falha ao buscar os dados da negociação", "details": get_deal_data}), 400
-        
         field_id = get_deal_data['result'].get("UF_CRM_1709042046")
         if not field_id:
             return jsonify({"error": "Campo Cidade List está vazio"}), 400
-        
+
         get_fields_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.fields"
-        get_fields_response = requests.get(get_fields_url)
-        time.sleep(2)
+        get_fields_response = make_request_with_retries('GET', get_fields_url)
+        handle_request_errors(get_fields_response, "Falha ao buscar os campos disponíveis")
         get_fields_data = get_fields_response.json()
 
-        if 'result' not in get_fields_data: 
-            return jsonify({"error": "Falha ao buscar os campos disponíveis", "details": get_fields_data}), 400
-        
         fields_items = get_fields_data['result'].get("UF_CRM_1709042046", {}).get("items", [])
-        if not fields_items:
-            return jsonify({"error": " O campo Cidade está Vazio"}), 400
-        
         matched_item = next((item for item in fields_items if item["ID"] == field_id), None)
-        if not matched_item: 
-            return jsonify({"error": f"ID {field_id} não encontrado na lista de itens do campo"}), 400
         
-        value_to_update = matched_item["VALUE"]
+        value_to_update = matched_item["VALUE"] if matched_item else None
 
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
-        update_response = requests.post(update_url, json={
+        update_response = make_request_with_retries('POST', update_url, json={
             "id": entity_id,
-            "fields": {
-                "UF_CRM_1733493949": value_to_update
-            }
+            "fields": {"UF_CRM_1733493949": value_to_update}
         })
+        handle_request_errors(update_response, "Falha ao atualizar o campo")
         
-        update_data = update_response.json()
-
-        if update_data.get("result"):
-            api_response = atualizar_campo_e_chamar_api_vero(value_to_update, entity_id)
-            return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
-        else:
-            return jsonify({"error": "Falha ao atualizar o campo", "details": update_data}), 400
-
-    except requests.exceptions.RequestException as e:
-        log_erro("Erro de conexão com o Bitrix24", e)
-        return jsonify({"error": "Erro de conexão com o servidor"}), 500
-
-    except KeyError as e:
-        log_erro("Erro ao tentar acessar um campo de dados inexistente", e)
-        return jsonify({"error": "Erro ao acessar um campo inexistente", "details": str(e)}), 500
+        api_response = atualizar_campo_e_chamar_api_vero(value_to_update, entity_id)
+        return jsonify({"message": "Campo atualizado com sucesso!", "value": value_to_update, "api_response": api_response}), 200
 
     except Exception as e:
         log_erro("Erro interno", e)
         return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+
 
 
 if __name__ == '__main__':
