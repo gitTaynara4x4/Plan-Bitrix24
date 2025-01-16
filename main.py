@@ -8,12 +8,8 @@ app = Flask(__name__)
 
 load_dotenv()
 
-CODIGO_BITRIX = os.getenv('CODIGO_BITRIX')
-CODIGO_BITRIX_STR = os.getenv('CODIGO_BITRIX_STR')
-PROFILE = os.getenv('PROFILE')
-BASE_URL_API_BITRIX = os.getenv('BASE_URL_API_BITRIX')
 
-BITRIX_WEBHOOK_URL = f"{BASE_URL_API_BITRIX}/{PROFILE}/{CODIGO_BITRIX}/"
+BITRIX_WEBHOOK_URL = f"https://marketingsolucoes.bitrix24.com.br/rest/5332/59ms4q24u7gxg7b7/"
 
 
 
@@ -186,6 +182,11 @@ CITIS_API_DESKTOP_DIAMANTE = ["SÃO PAULO - SP"]
 CITIS_API_DESKTOP_ASCENDENTE = ["SANTA BRANCA - SP"]
 
 
+# CIDADES DA OPERADORA ALGAR - INTERNET
+
+CITIES_ALGAR_MESH = ["PASSOS - MG", "POUSO ALEGRE - MG", "VARGINIA - MG"]
+
+
 def get_api_url_desktop(cidade):
     if cidade in CITIES_API_DESKTOP_BRONZE:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_bronze"
@@ -237,9 +238,31 @@ def get_api_url_vero(cidade):
     else:
         return None  
 
+def get_api_url_algar(cidade):
+    if cidade in CITIES_ALGAR_MESH:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_mesh"
+    else: 
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar"
+
+
 
 def atualizar_campo_no_crm(dados):
     pass
+
+
+def atualizar_campo_e_chamar_api_algar(cidade, entity_id):
+
+    atualizar_campo_no_crm(entity_id)
+
+    url_api = get_api_url_algar(cidade)
+
+    if url_api:
+        response = requests.post(f"{url_api}?deal_id={entity_id}", json={"cidade": cidade})
+        return response.json()  
+    else:
+        return {"error": "Cidade não mapeada"}
+
+
 
 def atualizar_campo_e_chamar_api_desktop(cidade, entity_id):
 
@@ -304,6 +327,7 @@ def handle_request_errors(response, error_message, details=None):
 
 
 
+
 @app.route('/update-plan-desktop/<string:entity_id>', methods=['POST'])
 def update_plan_desktop(entity_id):
     try:
@@ -333,6 +357,41 @@ def update_plan_desktop(entity_id):
     except Exception as e:
         log_erro("Erro interno", e)
         return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+
+
+
+@app.route('/update-plan-algar/<string:entity_id>', methods=['POST'])
+def update_plan_algar(entity_id):
+    try:
+        get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
+        get_deal_response = make_request_with_retries('GET', get_deal_url, params={"id": entity_id})
+        handle_request_errors(get_deal_response, "Falha ao buscar os dados da negociação")
+        get_deal_data = get_deal_response.json()
+
+        cidade = get_deal_data['result'].get("UF_CRM_1731588487")
+        uf = get_deal_data['result'].get("UF_CRM_1731589190")
+
+        if not cidade or not uf:
+            return jsonify({"error": "Campos Cidade e UF estão vazios"}), 400
+        
+        cidade_completa = f"{cidade.strip().upper()} - {uf.strip().upper()}"
+
+        update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
+
+        update_response = make_request_with_retries('POST', update_url, json={
+            "id": entity_id,
+            "fields": {"UF_CRM_1733493949": cidade_completa}
+        })
+
+        api_response = atualizar_campo_e_chamar_api_algar(cidade_completa, entity_id)
+        return jsonify ({"message": "Campo atualizado com sucesso!", "cidade_completa": cidade_completa, "api_response": api_response}), 200
+    
+    except Exception as e:
+        log_erro("Erro interno", e)
+        return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+
+
+
 
 
 @app.route('/update-plan-giga/<string:entity_id>', methods=['POST'])
