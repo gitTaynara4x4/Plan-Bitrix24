@@ -184,7 +184,55 @@ CITIS_API_DESKTOP_ASCENDENTE = ["SANTA BRANCA - SP"]
 
 # CIDADES DA OPERADORA ALGAR - INTERNET
 
-CITIES_ALGAR_MESH = ["PASSOS - MG", "POUSO ALEGRE - MG", "VARGINIA - MG"]
+CITIES_ALGAR_600MB = ["AMERICO BRASILIENSE - SP",
+    "ANAPOLIS - GO",
+    "APARECIDA DE GOIANIA - GO",
+    "ARACAJU - SE",
+    "ARARAQUARA - SP",
+    "ARARAS - SP",
+    "BRUSQUE - SC",
+    "BARUERI - SP",
+    "CRICIUMA - SC",
+    "JARAGUA DO SUL - SC",
+    "LAGES - SC",
+    "PALHOCA - SC",
+    "SAO BENTO DO SUL - SC",
+    "CARIACICA - ES",
+    "CAUCAIA - CE",
+    "CRAVINHOS - SP",
+    "CUBATAO - SP",
+    "DIADEMA - SP",
+    "EUSEBIO - CE",
+    "FEIRA DE SANTANA - BA",
+    "GOIANIA - GO",
+    "GUARA - DF",
+    "GUARULHOS - SP",
+    "ITU - SP",
+    "JABOTICABAL - SP",
+    "LAURO DE FREITAS - BA",
+    "MARACANAU - CE",
+    "MATAO - SP",
+    "MOGI DAS CRUZES - SP",
+    "MOGI GUACU - SP",
+    "MOGI MIRIM - SP",
+    "OSASCO - SP",
+    "PASSOS - MG",
+    "POUSO ALEGRE - MG",
+    "SALTO - SP",
+    "SALVADOR - BA",
+    "SANTA GERTRUDES - SP",
+    "SANTO ANDRE - SP",
+    "SAO BERNARDO DO CAMPO - SP",
+    "SAO CAETANO DO SUL - SP",
+    "SAO JOSE DO RIO PRETO - SP",
+    "SAO PAULO - SP",
+    "SERRA - ES",
+    "VARGINHA - MG",
+    "VARZEA PAULISTA - SP",
+    "VILA VELHA - ES",
+    "VITORIA - ES"]
+CITIES_ALGAR_800MB = ["BRASILIA - DF", "CEILANDIA - DF", "SAMAMBAIA - DF", "SANTA BARBARA D OESTE - SP", "TAGUATINGA - DF"]
+CITIES_ALGAR_SPECIALCITIES = ["PASSOS - MG", "POUSO ALEGRE - MG", "VARGINIA - MG"]
 
 
 def get_api_url_desktop(cidade):
@@ -239,8 +287,12 @@ def get_api_url_vero(cidade):
         return None  
 
 def get_api_url_algar(cidade):
-    if cidade in CITIES_ALGAR_MESH:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_mesh"
+    if cidade in CITIES_ALGAR_600MB:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_600MB"
+    elif cidade in CITIES_ALGAR_800MB:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_800MB"
+    elif cidade in CITIES_ALGAR_SPECIALCITIES:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_specialcities"
     else: 
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar"
 
