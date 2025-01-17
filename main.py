@@ -216,8 +216,6 @@ CITIES_ALGAR_600MB = ["AMERICO BRASILIENSE - SP",
     "MOGI GUACU - SP",
     "MOGI MIRIM - SP",
     "OSASCO - SP",
-    "PASSOS - MG",
-    "POUSO ALEGRE - MG",
     "SALTO - SP",
     "SALVADOR - BA",
     "SANTA GERTRUDES - SP",
@@ -227,7 +225,6 @@ CITIES_ALGAR_600MB = ["AMERICO BRASILIENSE - SP",
     "SAO JOSE DO RIO PRETO - SP",
     "SAO PAULO - SP",
     "SERRA - ES",
-    "VARGINHA - MG",
     "VARZEA PAULISTA - SP",
     "VILA VELHA - ES",
     "VITORIA - ES"]
@@ -293,7 +290,7 @@ def get_api_url_algar(cidade):
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_800MB"
     elif cidade in CITIES_ALGAR_SPECIALCITIES:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_specialcities"
-    return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_aar"
+    return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar"
 
 
 
