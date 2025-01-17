@@ -290,7 +290,8 @@ def get_api_url_algar(cidade):
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_800MB"
     elif cidade in CITIES_ALGAR_SPECIALCITIES:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_specialcities"
-    return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar"
+    else: 
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar"
 
 
 
