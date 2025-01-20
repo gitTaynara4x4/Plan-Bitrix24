@@ -273,22 +273,25 @@ def get_api_url_desktop(cidade):
 
 
 def get_api_url_giga(cidade):
+
+    urls = []
+
     if cidade in CITIES_API_TERRITORIO_T1_a_T9:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt1_a_t9"
-    elif cidade in CITIES_API_TERRITORIO_T10_a_T14:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt10_t14"
-    elif cidade in CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_TELEFONEFIXO_T5_a_T7"
-    elif cidade in CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_ALTOS_PARNAIBA_TERESINA"
-    elif cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_1:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_1"
-    elif cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_2:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_2"
-    elif cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_3:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_3"
-    else: 
-        return None
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt1_a_t9")
+    if cidade in CITIES_API_TERRITORIO_T10_a_T14:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt10_t14")
+    if cidade in CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_TELEFONEFIXO_T5_a_T7")
+    if cidade in CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_ALTOS_PARNAIBA_TERESINA")
+    if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_1:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_1")
+    if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_2:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_2")
+    if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_3:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_3") 
+
+    return urls if urls else None
 
 def get_api_url_vero(cidade):
     if cidade in CITIES_API_OURO:
