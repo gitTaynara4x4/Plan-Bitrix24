@@ -277,6 +277,8 @@ def get_api_url_giga(cidade):
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt1_a_t9"
     elif cidade in CITIES_API_TERRITORIO_T10_a_T14:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt10_t14"
+    elif cidade in CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_TELEFONEFIXO_T5_a_T7"
     elif cidade in CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_ALTOS_PARNAIBA_TERESINA"
     elif cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_1:
