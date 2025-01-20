@@ -180,7 +180,53 @@ CITIES_API_TERRITORIO_T10_a_T14 = [ "CARNAÍBA - PE", "CARPINA - PE", "CARUARU -
     "INDEPENDÊNCIA - CE", "JATI - CE", "JUAZEIRO DO NORTE - CE", "JUCÁS - CE", 
     "LAVRAS DA MANGABEIRA - CE", "MAURITI - CE", "MISSÃO VELHA - CE", "MOMBAÇA - CE", 
     "ORÓS - CE", "PARAMBU - CE", "PIQUET CARNEIRO - CE", "PORTEIRAS - CE", "QUIXELÔ - CE", 
-    "SALITRE - CE", "TARRAFAS - CE", "TAUÁ - CE", "VÁRZEA ALEGRE - CE"
+    "SALITRE - CE", "TARRAFAS - CE", "TAUÁ - CE", "VÁRZEA ALEGRE - CE",
+    "ALTOS - PI", 
+    "CAXIAS - MA", 
+    "PARAUAPEBAS - PA", 
+    "TERESINA - PI", 
+    "TIMON - MA", 
+    "CAUCAIA - CE", 
+    "FORTALEZA - CE", 
+    "MARACANAÚ - CE", 
+    "ACARAÚ - CE", 
+    "AQUIRAZ - CE", 
+    "BEBERIBE - CE", 
+    "CAMOCIM - CE", 
+    "CASCAVEL - CE", 
+    "CRUZ - CE", 
+    "EUSÉBIO - CE", 
+    "FORTIM - CE", 
+    "FRECHEIRINHA - CE", 
+    "GRAÇA - CE", 
+    "GRANJA - CE", 
+    "IBIAPINA - CE", 
+    "ITAITINGA - CE", 
+    "ITAPIPOCA - CE", 
+    "ITAREMA - CE", 
+    "JIJOCA DE JERICOACOARA - CE", 
+    "LIMOEIRO DO NORTE - CE", 
+    "MARANGUAPE - CE", 
+    "MORADA NOVA - CE", 
+    "MUCAMBO - CE", 
+    "PACAJUS - CE", 
+    "PACATUBA - CE", 
+    "PACUJÁ - CE", 
+    "PARACURU - CE", 
+    "PARAIPABA - CE", 
+    "PARNAÍBA - PI", 
+    "PENTECOSTE - CE", 
+    "PINDORETAMA - CE", 
+    "QUIXADÁ - CE", 
+    "RUSSAS - CE", 
+    "SÃO BENEDITO - CE", 
+    "SÃO GONÇALO DO AMARANTE - CE", 
+    "SÃO LUÍS DO CURU - CE", 
+    "SOBRAL - CE", 
+    "TABULEIRO DO NORTE - CE", 
+    "TIANGUÁ - CE", 
+    "TRAIRI - CE", 
+    "UBAJARA - CE"
 ]
 CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA = [
     "ALTOS - PI", "PARNAÍBA - PI", "TERESINA - PI"
@@ -291,7 +337,7 @@ def get_api_url_giga(cidade):
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_3:
         urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_3") 
 
-    return urls if urls else None
+    return urls or None
 
 def get_api_url_vero(cidade):
     if cidade in CITIES_API_OURO:
@@ -349,18 +395,27 @@ def atualizar_campo_e_chamar_api_desktop(cidade, entity_id):
         
 
 def atualizar_campo_e_chamar_api_giga(cidade, entity_id):
-    
+
     atualizar_campo_no_crm(entity_id)
-    
-    
-    url_api = get_api_url_giga(cidade)
-    
-    if url_api:
-        response = requests.post(f"{url_api}?deal_id={entity_id}", json={"cidade": cidade})
-        return response.json() 
-    else:
+
+
+    urls = get_api_url_giga(cidade) 
+
+
+    if not urls:
         return {"error": "Cidade não mapeada"}
-        
+
+
+    responses = []
+    for url in urls:
+        try:
+           
+            response = requests.post(f"{url}?deal_id={entity_id}", json={"cidade": cidade})
+            responses.append({"url": url, "status_code": response.status_code, "response": response.json()})
+        except Exception as e:
+            responses.append({"url": url, "error": str(e)})
+
+    return responses
 
 def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
     
