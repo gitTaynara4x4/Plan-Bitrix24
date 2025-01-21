@@ -351,16 +351,17 @@ def get_api_url_giga(cidade):
 def get_api_url_vero(cidade):
 
     urls = []
-    if cidade in CITIES_API_OFERTA_SPECIAL:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowofertaspecial"
+
     if cidade in CITIES_API_OURO:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowouro"
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowouro")
+    if cidade in CITIES_API_OFERTA_SPECIAL:
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowofertaspecial")
     if cidade in CITIES_API_PADRAO:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowpadrao"
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowpadrao")
     if cidade in CITIES_API_REDE_NEUTRA:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowredeneutra"
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowredeneutra")
     if cidade in CITIES_API_PRATA:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowprata"
+        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowprata")
     
     return urls or None 
 
