@@ -133,10 +133,7 @@ CITIES_API_REDE_NEUTRA = [
     "NOVA LIMA - MG"
 ]
 
-CITIES_API_OFERTA_SPECIAL = [
-    "BARBACENA - MG",
-    "CONSELHEIRO LAFAIETE - MG",
-    "DIVINÓPOLIS - MG"
+CITIES_API_OFERTA_SPECIAL = [ "BARBACENA - MG", "CONSELHEIRO LAFAIETE - MG", "DIVINÓPOLIS - MG"
 ]
 
 
@@ -434,11 +431,13 @@ def atualizar_campo_e_chamar_api_giga(cidade, entity_id):
 
 def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
     
+
     atualizar_campo_no_crm(entity_id)
-    
-    
-    urls = get_api_url_vero(cidade)
-    
+
+
+    urls = get_api_url_vero(cidade) 
+
+
     if not urls:
         return {"error": "Cidade não mapeada"}
 
