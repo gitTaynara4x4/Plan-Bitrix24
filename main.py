@@ -133,6 +133,15 @@ CITIES_API_REDE_NEUTRA = [
     "NOVA LIMA - MG"
 ]
 
+CITIES_API_OFERTA_SPECIAL = [
+    "BARBACENA - MG",
+    "CONSELHEIRO LAFAIETE - MG",
+    "DIVINÓPOLIS - MG"
+]
+
+
+
+
 # CIDADES DA OPERADORA GIGA+ - INTERNET
 
 CITIES_API_TERRITORIO_T1_a_T9 = [
@@ -340,16 +349,21 @@ def get_api_url_giga(cidade):
     return urls or None
 
 def get_api_url_vero(cidade):
+
+    urls = []
+    if cidade in CITIES_API_OFERTA_SPECIAL:
+        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowofertaspecial"
     if cidade in CITIES_API_OURO:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowouro"
-    elif cidade in CITIES_API_PADRAO:
+    if cidade in CITIES_API_PADRAO:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowpadrao"
-    elif cidade in CITIES_API_REDE_NEUTRA:
+    if cidade in CITIES_API_REDE_NEUTRA:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowredeneutra"
-    elif cidade in CITIES_API_PRATA:
+    if cidade in CITIES_API_PRATA:
         return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowprata"
-    else:
-        return None  
+    
+    return urls or None 
+
 
 def get_api_url_algar(cidade):
     if cidade in CITIES_ALGAR_600MB:
@@ -422,13 +436,22 @@ def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
     atualizar_campo_no_crm(entity_id)
     
     
-    url_api = get_api_url_vero(cidade)
+    urls = get_api_url_vero(cidade)
     
-    if url_api:
-        response = requests.post(f"{url_api}?deal_id={entity_id}", json={"cidade": cidade})
-        return response.json()
-    else:
+    if not urls:
         return {"error": "Cidade não mapeada"}
+
+
+    responses = []
+    for url in urls:
+        try:
+           
+            response = requests.post(f"{url}?deal_id={entity_id}", json={"cidade": cidade})
+            responses.append({"url": url, "status_code": response.status_code, "response": response.json()})
+        except Exception as e:
+            responses.append({"url": url, "error": str(e)})
+
+    return responses
 
 
 
