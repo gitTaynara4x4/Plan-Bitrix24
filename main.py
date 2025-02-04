@@ -8,11 +8,9 @@ app = Flask(__name__)
 
 load_dotenv()
 
+webhook_bitrix = os.getenv('webhook_bitrix')
 
-BITRIX_WEBHOOK_URL = f"https://marketingsolucoes.bitrix24.com.br/rest/5332/59ms4q24u7gxg7b7/"
-
-
-
+BITRIX_WEBHOOK_URL = f"{webhook_bitrix}"
 
 def log_erro(mensagem, e=None):
     """ Função de log de erro para registrar exceções """
