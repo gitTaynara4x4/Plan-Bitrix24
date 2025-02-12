@@ -145,7 +145,7 @@ CITIES_API_TERRITORIO_T1_a_T9 = [
     "ALÉM PARAÍBA - RJ", "BARRA DO PIRAÍ - RJ", "BARRA MANSA - RJ", "BOM JARDIM - RJ", "CACHOEIRAS DE MACACU - RJ", "CARMO - RJ", "COMENDADOR LEVY GASPARIAN - RJ", "GUAPIMIRIM - RJ", "ITAIPAVA - RJ", "ITATIAIA - RJ", "MAGÉ - RJ", "MIGUEL PEREIRA - RJ", "NOVA FRIBURGO - RJ", "PARAÍBA DO SUL - RJ", "PATY DO ALFERES - RJ", "PETRÓPOLIS - RJ", "PINHEIRAL - RJ", "PORTO REAL - RJ", "RESENDE - RJ", "SAPUCAIA - RJ", "SILVA JARDIM - RJ", "SUMIDOURO - RJ", "TERESÓPOLIS - RJ", "TRÊS RIOS - RJ", "VALENÇA - RJ", "VASSOURAS - RJ", "VOLTA REDONDA - RJ",
     "ANCHIETA - ES", "APERIBÉ - ES", "CACHOEIRO DE ITAPEMIRIM - ES", "CAMBUCI - ES", "CAMPOS DOS GOYTACAZES - ES", "CANTAGALO - ES", "CARIACICA - ES", "CATAGUASES - ES", "CORDEIRO - ES", "DUAS BARRAS - ES", "GUARAPARI - ES", "ITAOCARA - ES", "ITAPEMIRIM - ES", "ITAPERUNA - ES", "LAJE DO MURIAÉ - ES", "MACUCO - ES", "MARATAÍZES - ES", "MIRACEMA - ES", "MURIAÉ - ES", "PIÚMA - ES", "SANTO ANTÔNIO DE PÁDUA - ES", "SÃO FIDÉLIS - ES", "SÃO JOSÉ DE UBÁ - ES", "SERRA - ES", "VILA VELHA - ES", "VITÓRIA - ES"
     "AGUANIL - MG", "ALPINÓPOLIS - MG", "ARAXÁ - MG", "BOA ESPERANÇA - MG", "CAMPO DO MEIO - MG", "CAMPOS ALTOS - MG", "CAMPOS GERAIS - MG", "CARMO DO RIO CLARO - MG", "CONQUISTA - MG", "COQUEIRAL - MG", "COROMANDEL - MG", "CRISTAIS - MG", "DELTA - MG", "FORTALEZA DE MINAS - MG", "GUAPÉ - MG", "GUARANÉSIA - MG", "GUAXUPÉ - MG", "IBIÁ - MG", "ILICÍNEA - MG", "ITAÚ DE MINAS - MG", "JACUÍ - MG", "MONTE SANTO DE MINAS - MG", "NEPOMUCENO - MG", "NOVA PONTE - MG", "PASSOS - MG", "PEDRINÓPOLIS - MG", "PERDIZES - MG", "PRATÁPOLIS - MG", "PRATINHA - MG", "SACRAMENTO - MG", "SANTA JULIANA - MG", "SANTANA DA VARGEM - MG", "SÃO GOTARDO - MG", "SÃO JOÃO BATISTA DO GLÓRIA - MG", "SÃO JOSÉ DA BARRA - MG", "SÃO SEBASTIÃO DO PARAÍSO - MG", "SÃO TOMÁS DE AQUINO - MG", "SERRA DO SALITRE - MG", "TAPIRA - MG", "UBERABA - MG", "UBERLÂNDIA - MG",
-    "ALTINÓPOLIS - SP", "ARAMINA - SP", "BRASÍLIA - SP", "FRANCA - SP", "GUARÁ - SP", "IGARAPAVA - SP", "IPUÃ - SP", "ITIRAPUÃ - SP", "ITUVERAVA - SP", "MORRO AGUDO - SP", "ORLÂNDIA - SP", "PATROCÍNIO PAULISTA - SP", "RIBEIRÃO PRETO - SP", "SÃO JOAQUIM DA BARRA - SP", "SÃO JOSÉ DA BELA VISTA - SP"
+    "ALTINÓPOLIS - SP", "ARAMINA - SP", "BRASÍLIA - SP", "BRASÍLIA - DF", "FRANCA - SP", "GUARÁ - SP", "IGARAPAVA - SP", "IPUÃ - SP", "ITIRAPUÃ - SP", "ITUVERAVA - SP", "MORRO AGUDO - SP", "ORLÂNDIA - SP", "PATROCÍNIO PAULISTA - SP", "RIBEIRÃO PRETO - SP", "SÃO JOAQUIM DA BARRA - SP", "SÃO JOSÉ DA BELA VISTA - SP"
 ]
 
 CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7 = [
@@ -304,17 +304,17 @@ CITIES_ALGAR_SPECIALCITIES = ["PASSOS - MG", "POUSO ALEGRE - MG", "VARGINIA - MG
 
 def get_api_url_desktop(cidade):
     if cidade in CITIES_API_DESKTOP_BRONZE:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_bronze"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_desktop_bronze"
     elif cidade in CITIES_API_DESKTOP_PRATA:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_prata"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_desktop_prata"
     elif cidade in CITIS_API_DESKTOP_OURO:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_ouro"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_desktop_ouro"
     elif cidade in CITIS_API_DESKTOP_PLATINA:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_platina"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_desktop_platina"
     elif cidade in CITIS_API_DESKTOP_DIAMANTE:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_diamante"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_desktop_diamante"
     elif cidade in CITIS_API_DESKTOP_ASCENDENTE:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_desktop_ascedente"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_desktop_ascedente"
     else: 
         return None
 
@@ -324,19 +324,19 @@ def get_api_url_giga(cidade):
     urls = []
 
     if cidade in CITIES_API_TERRITORIO_T1_a_T9:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt1_a_t9")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt1_a_t9")
     if cidade in CITIES_API_TERRITORIO_T10_a_T14:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt10_t14")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt10_t14")
     if cidade in CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_TELEFONEFIXO_T5_a_T7")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_TELEFONEFIXO_T5_a_T7")
     if cidade in CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_ALTOS_PARNAIBA_TERESINA")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_ALTOS_PARNAIBA_TERESINA")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_1:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_1")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_1")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_2:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_2")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_2")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_3:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowt_CIDADES_ESPECIAIS_3") 
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_3") 
 
     return urls or None
 
@@ -345,28 +345,28 @@ def get_api_url_vero(cidade):
     urls = []
 
     if cidade in CITIES_API_OURO:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowouro")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowouro")
     if cidade in CITIES_API_OFERTA_SPECIAL:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowofertaspecial")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowofertaspecial")
     if cidade in CITIES_API_PADRAO:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowpadrao")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowpadrao")
     if cidade in CITIES_API_REDE_NEUTRA:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowredeneutra")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowredeneutra")
     if cidade in CITIES_API_PRATA:
-        urls.append("https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflowprata")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowprata")
     
     return urls or None 
 
 
 def get_api_url_algar(cidade):
     if cidade in CITIES_ALGAR_600MB:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_600MB"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_algar_600MB"
     elif cidade in CITIES_ALGAR_800MB:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_800MB"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_algar_800MB"
     elif cidade in CITIES_ALGAR_SPECIALCITIES:
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar_specialcities"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_algar_specialcities"
     else: 
-        return "https://falasolucoes-workflow-solucoes.ywsa8i.easypanel.host/webhook/workflow_algar"
+        return "https://workflow-solucoes.onrender.com/webhook/workflow_algar"
 
 
 
