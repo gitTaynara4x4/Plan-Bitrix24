@@ -324,19 +324,19 @@ def get_api_url_giga(cidade):
     urls = []
 
     if cidade in CITIES_API_TERRITORIO_T1_a_T9:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt1_a_t9")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt1_a_t9?")
     if cidade in CITIES_API_TERRITORIO_T10_a_T14:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt10_t14")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt10_t14?")
     if cidade in CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_TELEFONEFIXO_T5_a_T7")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_TELEFONEFIXO_T5_a_T7?")
     if cidade in CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_ALTOS_PARNAIBA_TERESINA")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_ALTOS_PARNAIBA_TERESINA?")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_1:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_1")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_1?")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_2:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_2")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_2?")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_3:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_3") 
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_3?") 
 
     return urls or None
 
