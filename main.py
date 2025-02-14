@@ -9,8 +9,10 @@ app = Flask(__name__)
 load_dotenv()
 
 
+BITRIX_WEBHOOK_URL = f"https://marketingsolucoes.bitrix24.com.br/rest/5332/59ms4q24u7gxg7b7/"
 
-BITRIX_WEBHOOK_URL = f"https://marketingsolucoes.bitrix24.com.br/rest/5332/sz8k2t1m3d38j1pm/"
+
+
 
 def log_erro(mensagem, e=None):
     """ Função de log de erro para registrar exceções """
@@ -145,7 +147,7 @@ CITIES_API_TERRITORIO_T1_a_T9 = [
     "ALÉM PARAÍBA - RJ", "BARRA DO PIRAÍ - RJ", "BARRA MANSA - RJ", "BOM JARDIM - RJ", "CACHOEIRAS DE MACACU - RJ", "CARMO - RJ", "COMENDADOR LEVY GASPARIAN - RJ", "GUAPIMIRIM - RJ", "ITAIPAVA - RJ", "ITATIAIA - RJ", "MAGÉ - RJ", "MIGUEL PEREIRA - RJ", "NOVA FRIBURGO - RJ", "PARAÍBA DO SUL - RJ", "PATY DO ALFERES - RJ", "PETRÓPOLIS - RJ", "PINHEIRAL - RJ", "PORTO REAL - RJ", "RESENDE - RJ", "SAPUCAIA - RJ", "SILVA JARDIM - RJ", "SUMIDOURO - RJ", "TERESÓPOLIS - RJ", "TRÊS RIOS - RJ", "VALENÇA - RJ", "VASSOURAS - RJ", "VOLTA REDONDA - RJ",
     "ANCHIETA - ES", "APERIBÉ - ES", "CACHOEIRO DE ITAPEMIRIM - ES", "CAMBUCI - ES", "CAMPOS DOS GOYTACAZES - ES", "CANTAGALO - ES", "CARIACICA - ES", "CATAGUASES - ES", "CORDEIRO - ES", "DUAS BARRAS - ES", "GUARAPARI - ES", "ITAOCARA - ES", "ITAPEMIRIM - ES", "ITAPERUNA - ES", "LAJE DO MURIAÉ - ES", "MACUCO - ES", "MARATAÍZES - ES", "MIRACEMA - ES", "MURIAÉ - ES", "PIÚMA - ES", "SANTO ANTÔNIO DE PÁDUA - ES", "SÃO FIDÉLIS - ES", "SÃO JOSÉ DE UBÁ - ES", "SERRA - ES", "VILA VELHA - ES", "VITÓRIA - ES"
     "AGUANIL - MG", "ALPINÓPOLIS - MG", "ARAXÁ - MG", "BOA ESPERANÇA - MG", "CAMPO DO MEIO - MG", "CAMPOS ALTOS - MG", "CAMPOS GERAIS - MG", "CARMO DO RIO CLARO - MG", "CONQUISTA - MG", "COQUEIRAL - MG", "COROMANDEL - MG", "CRISTAIS - MG", "DELTA - MG", "FORTALEZA DE MINAS - MG", "GUAPÉ - MG", "GUARANÉSIA - MG", "GUAXUPÉ - MG", "IBIÁ - MG", "ILICÍNEA - MG", "ITAÚ DE MINAS - MG", "JACUÍ - MG", "MONTE SANTO DE MINAS - MG", "NEPOMUCENO - MG", "NOVA PONTE - MG", "PASSOS - MG", "PEDRINÓPOLIS - MG", "PERDIZES - MG", "PRATÁPOLIS - MG", "PRATINHA - MG", "SACRAMENTO - MG", "SANTA JULIANA - MG", "SANTANA DA VARGEM - MG", "SÃO GOTARDO - MG", "SÃO JOÃO BATISTA DO GLÓRIA - MG", "SÃO JOSÉ DA BARRA - MG", "SÃO SEBASTIÃO DO PARAÍSO - MG", "SÃO TOMÁS DE AQUINO - MG", "SERRA DO SALITRE - MG", "TAPIRA - MG", "UBERABA - MG", "UBERLÂNDIA - MG",
-    "ALTINÓPOLIS - SP", "ARAMINA - SP", "BRASÍLIA - SP", "BRASÍLIA - DF", "FRANCA - SP", "GUARÁ - SP", "IGARAPAVA - SP", "IPUÃ - SP", "ITIRAPUÃ - SP", "ITUVERAVA - SP", "MORRO AGUDO - SP", "ORLÂNDIA - SP", "PATROCÍNIO PAULISTA - SP", "RIBEIRÃO PRETO - SP", "SÃO JOAQUIM DA BARRA - SP", "SÃO JOSÉ DA BELA VISTA - SP"
+    "ALTINÓPOLIS - SP", "ARAMINA - SP", "BRASÍLIA - SP", "FRANCA - SP", "GUARÁ - SP", "IGARAPAVA - SP", "IPUÃ - SP", "ITIRAPUÃ - SP", "ITUVERAVA - SP", "MORRO AGUDO - SP", "ORLÂNDIA - SP", "PATROCÍNIO PAULISTA - SP", "RIBEIRÃO PRETO - SP", "SÃO JOAQUIM DA BARRA - SP", "SÃO JOSÉ DA BELA VISTA - SP"
 ]
 
 CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7 = [
@@ -324,19 +326,19 @@ def get_api_url_giga(cidade):
     urls = []
 
     if cidade in CITIES_API_TERRITORIO_T1_a_T9:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt1_a_t9?")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt1_a_t9")
     if cidade in CITIES_API_TERRITORIO_T10_a_T14:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt10_t14?")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt10_t14")
     if cidade in CITIES_API_TERRITORIO_TELEFONEFIXO_T5_a_T7:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_TELEFONEFIXO_T5_a_T7?")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_TELEFONEFIXO_T5_a_T7")
     if cidade in CITIES_API_TERRITORIO_ALTOS_PARNAIBA_TERESINA:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_ALTOS_PARNAIBA_TERESINA?")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_ALTOS_PARNAIBA_TERESINA")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_1:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_1?")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_1")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_2:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_2?")
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_2")
     if cidade in CITIES_API_TERRITORIO_CIDADES_ESPECIAIS_3:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_3?") 
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowt_CIDADES_ESPECIAIS_3") 
 
     return urls or None
 
