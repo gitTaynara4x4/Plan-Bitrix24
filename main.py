@@ -295,7 +295,7 @@ CITIES_ALGAR_600MB = ["AMERICO BRASILIENSE - SP",
     "SAO BERNARDO DO CAMPO - SP",
     "SAO CAETANO DO SUL - SP",
     "SAO JOSE DO RIO PRETO - SP",
-    "SAO PAULO - SP",
+    "SÃO PAULO - SP",
     "SERRA - ES",
     "VARZEA PAULISTA - SP",
     "VILA VELHA - ES",
@@ -509,32 +509,55 @@ def update_plan_desktop(entity_id):
 @app.route('/update-plan-algar/<string:entity_id>', methods=['POST'])
 def update_plan_algar(entity_id):
     try:
+        print("ola")
         get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
+        print("tudo bem")
+
         get_deal_response = make_request_with_retries('GET', get_deal_url, params={"id": entity_id})
+        print("bom dia")
+
         handle_request_errors(get_deal_response, "Falha ao buscar os dados da negociação")
+        print("e aí")
+
         get_deal_data = get_deal_response.json()
+        print("como vai")
+
 
         cidade = get_deal_data['result'].get("UF_CRM_1731588487")
+        print("como estas")
+
         uf = get_deal_data['result'].get("UF_CRM_1731589190")
+
+        print("Boa tarder")
 
         if not cidade or not uf:
             return jsonify({"error": "Campos Cidade e UF estão vazios"}), 400
+
+        print("vamos")
         
         cidade_completa = f"{cidade.strip().upper()} - {uf.strip().upper()}"
 
+        print("sim")
+
         update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
+
+        print("print")
 
         update_response = make_request_with_retries('POST', update_url, json={
             "id": entity_id,
             "fields": {"UF_CRM_1733493949": cidade_completa}
         })
 
+        print("calma")
+
         api_response = atualizar_campo_e_chamar_api_algar(cidade_completa, entity_id)
+
+        print("quase")
         return jsonify ({"message": "Campo atualizado com sucesso!", "cidade_completa": cidade_completa, "api_response": api_response}), 200
     
     except Exception as e:
         log_erro("Erro interno", e)
-        return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+        return jsonify({"atualizado_em":"14/02", "error": "Erro interno no servidor", "details": str(e)}), 500
 
 
 
