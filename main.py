@@ -735,6 +735,15 @@ CITIES_ALGAR_600MB = ["AMERICO BRASILIENSE - SP",
 CITIES_ALGAR_800MB = ["BRASÍLIA - DF", "CEILANDIA - DF", "SAMAMBAIA - DF", "SANTA BARBARA D OESTE - SP", "TAGUATINGA - DF"]
 CITIES_ALGAR_SPECIALCITIES = ["PASSOS - MG", "POUSO ALEGRE - MG", "VARGINIA - MG"]
 
+# CLUSTER BL_FIBRA
+
+BL_FIBRA = [
+    "BELO HORIZONTE - MG",
+    "CONTAGEM - MG",
+    "SABARÁ - MG", 
+    "SANTA LUZIA - MG"
+]
+
 
 def get_api_url_desktop(cidade):
     if cidade in CITIES_API_DESKTOP_BRONZE:
@@ -885,6 +894,29 @@ def atualizar_campo_e_chamar_api_vero(cidade, entity_id):
             responses.append({"url": url, "error": str(e)})
 
     return responses
+
+def atualizar_campo_e_chamar_api_bl(cidade, entity_id):
+    
+
+    atualizar_campo_no_crm(entity_id)
+
+
+    url = "https://workflow-solucoes.onrender.com/webhook/workflow_bl-fibra" 
+
+
+    if cidade not in BL_FIBRA:
+        return {"error": "Cidade não mapeada"}
+
+
+    
+    try:
+    
+        response = requests.post(f"{url}?deal_id={entity_id}", json={"cidade": cidade})
+        response = response.json()
+    except Exception as e:
+        response = {"url": url, "error": str(e)}
+
+    return response
 
 
 
@@ -1054,6 +1086,36 @@ def update_plan_vero(entity_id):
         })
 
         api_response = atualizar_campo_e_chamar_api_vero(cidade_completa, entity_id)
+        return jsonify ({"message": "Campo atualizado com sucesso!", "cidade_completa": cidade_completa, "api_response": api_response}), 200
+    
+    except Exception as e:
+        log_erro("Erro interno", e)
+        return jsonify({"error": "Erro interno no servidor", "details": str(e)}), 500
+    
+@app.route('/update-plan-bl/<string:entity_id>', methods=['POST'])
+def update_plan_bl(entity_id):
+    try:
+        get_deal_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.get"
+        get_deal_response = make_request_with_retries('GET', get_deal_url, params={"id": entity_id})
+        handle_request_errors(get_deal_response, "Falha ao buscar os dados da negociação")
+        get_deal_data = get_deal_response.json()
+
+        cidade = get_deal_data['result'].get("UF_CRM_1731588487")
+        uf = get_deal_data['result'].get("UF_CRM_1731589190")
+
+        if not cidade or not uf:
+            return jsonify({"error": "Campos Cidade e UF estão vazios"}), 400
+        
+        cidade_completa = f"{cidade.strip().upper()} - {uf.strip().upper()}"
+
+        update_url = f"{BITRIX_WEBHOOK_URL}/crm.deal.update"
+
+        update_response = make_request_with_retries('POST', update_url, json={
+            "id": entity_id,
+            "fields": {"UF_CRM_1733493949": cidade_completa}
+        })
+
+        api_response = atualizar_campo_e_chamar_api_bl(cidade_completa, entity_id)
         return jsonify ({"message": "Campo atualizado com sucesso!", "cidade_completa": cidade_completa, "api_response": api_response}), 200
     
     except Exception as e:
