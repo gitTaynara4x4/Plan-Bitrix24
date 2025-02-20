@@ -74,7 +74,7 @@ CITIES_API_PRATA = [
     "SETE LAGOAS - MG",
     "TRINDADE - GO",
     "UBÁ - MG",
-    "RIBEIRÃO DAS NEVES - MG", "BRUMADINHO - MG", "BELO HORIZONTE - MG", "CAETÉ - MG", 
+    "RIBEIRÃO DAS NEVES - MG", "BRUMADINHO - MG", "CAETÉ - MG", 
   "CAMPO BELO - MG", "CANOAS - RS", "CARATINGA - MG", "CORONEL FABRICIANO - MG", "DOIS IRMÃOS - RS", "ESTÂNCIA VELHA - RS", "FELIZ - RS", "IGARAPÉ - MG", 
   "IPATINGA - MG", "ITABIRITO - MG", "IVOTI - RS", "JOÃO MONLEVADE - MG", 
   "LEOPOLDINA - MG", "LINDOLFO COLLOR - RS", "LUZIÂNIA - GO", "MANHUAÇU - MG", 
@@ -126,14 +126,183 @@ CITIES_API_PRATA = [
   "SÃO JOSÉ - SC", "SÃO PEDRO DE ALCÂNTARA - SC", "DOURADOS - MS"
 ]
 CITIES_API_REDE_NEUTRA = [
-    "BETIM - MG",
-    "NOVA LIMA - MG"
+    "APARECIDA DE GOIÂNIA - GO"
+"BELO HORIZONTE - MG"
+"CONTAGEM - MG"
+"GOIÂNIA - GO"
+"SENADOR CANEDO - GO"
+"SETE LAGOAS - MG"
+"TRINDADE - GO"
+"UBÁ - MG"
+"RIBEIRÃO DAS NEVES - MG"
 ]
 
-CITIES_API_OFERTA_SPECIAL = [ "BARBACENA - MG", "CONSELHEIRO LAFAIETE - MG", "DIVINÓPOLIS - MG"
+CITIES_API_SAFIRA = [
+    "VALPARAÍSO DE GOIÁS - GO",
+    "TRÊS LAGOAS - MS",
+    "BARBACENA - MG",
+    "DIVINÓPOLIS - MG",
+    "IPATINGA - MG",
+    "MANHUAÇU - MG",
+    "JUIZ DE FORA - MG",
+    "SABARÁ - MG",
+    "UBERLÂNDIA - MG",
+    "BAURU - SP",
+    "LIMEIRA - SP",
+    "PRESIDENTE PRUDENTE - SP",
+    "ITAQUAQUECETUBA - SP",
+    "SANTA BÁRBARA D'OESTE - SP",
+    "SÃO JOSÉ DOS CAMPOS - SP",
+    "PEDERNEIRAS - SP",
+    "CORDEIROPOLIS - SP",
+    "IRACEMAPOLIS - SP",
+    "AGUDOS - SP",
+    "SÃO PAULO - SP",
+    "IPERÓ - SP",
+    "PIRATININGA - SP",
+    "RIO GRANDE DA SERRA - SP",
+    "IBIÚNA - SP",
+    "BARUERI - SP",
+    "FERRAZ DE VASCONCELOS - SP",
+    "JUNDIAÍ - SP",
+    "COTIA - SP",
+    "SUZANO - SP",
+    "OSASCO - SP",
+    "MAQUINÉ - RS",
+    "TRAMANDAÍ - RS"
 ]
 
+CITYES_API_GRAFENO_75 = [
+    "TRÊS LAGOAS - MS",
+    "CALDAS NOVAS - GO",
+    "INHUMAS - GO",
+    "GOIATUBA - GO",
+    "SANTA HELENA DE GOIÁS - GO",
+    "CORONEL FABRICIANO - MG",
+    "IPATINGA - MG",
+    "LIMA DUARTE - MG",
+    "MATIAS BARBOSA - MG",
+    "PARÁ DE MINAS - MG",
+    "TIMÓTEO - MG",
+    "LIMEIRA - SP",
+    "PRESIDENTE PRUDENTE - SP",
+    "BIRIGUI - SP",
+    "PIRASSUNUNGA - SP",
+    "LEME - SP",
+    "VOTORANTIM - SP",
+    "SÃO JOSÉ DOS CAMPOS - SP",
+    "TATUI - SP",
+    "ANDRADINA - SP",
+    "SOROCABA - SP",
+    "AMERICANA - SP",
+    "GUARARAPES - SP",
+    "PIEDADE - SP",
+    "AGUDOS - SP",
+    "ARROIO DO SAL - RS",
+    "DOIS IRMÃOS - RS",
+    "FRANCISCO BELTRÃO - PR",
+    "IMBÉ - RS",
+    "SÃO JOSÉ DO CEDRO - SC",
+    "SÃO MIGUEL DO OESTE - SC",
+    "TRAMANDAÍ - RS",
+    "GOVERNADOR CELSO RAMOS - SC"
+]
 
+CITYES_API_GRAFENO_80 = [
+    "BARBACENA - MG",
+    "CARATINGA - MG",
+    "DIVINÓPOLIS - MG",
+    "CONSELHEIRO LAFAIETE - MG",
+    "GOVERNADOR VALADARES - MG",
+    "SANTANA DO PARAÍSO - MG",
+    "TEÓFILO OTONI - MG",
+    "BAURU - SP",
+    "ARACATUBA - SP",
+    "POA - SP",
+    "SÃO JOSÉ DO RIO PRETO - SP",
+    "ITAQUAQUECETUBA - SP",
+    "MAIRINQUE - SP",
+    "RIBEIRÃO PIRES - SP",
+    "PINDAMONHANGABA - SP",
+    "SÃO ROQUE - SP",
+    "PEDERNEIRAS - SP",
+    "PIRACICABA - SP",
+    "LINS - SP",
+    "PRESIDENTE EPITÁCIO - SP",
+    "BOTUCATU - SP",
+    "ITU - SP",
+    "CRUZEIRO - SP",
+    "PEREIRA BARRETO - SP",
+    "ARUJÁ - SP",
+    "BARRA BONITA - SP",
+    "MARTINÓPOLIS - SP",
+    "FERNANDÓPOLIS - SP",
+    "IGARACU DO TIETÊ - SP",
+    "SANTO ANASTÁCIO - SP",
+    "LORENA - SP",
+    "ILHA SOLTEIRA - SP",
+    "CASTILHO - SP",
+    "PRESIDENTE VENCESLAU - SP",
+    "SANTA ISABEL - SP",
+    "VALPARAÍSO - SP",
+    "FRANCO DA ROCHA - SP",
+    "APARECIDA - SP",
+    "CORDEIROPOLIS - SP",
+    "JALES - SP",
+    "MIRANDÓPOLIS - SP",
+    "PRESIDENTE BERNARDES - SP",
+    "SANTA FÉ DO SUL - SP",
+    "IRACEMAPOLIS - SP",
+    "PROMISSÃO - SP",
+    "CACAPAVA - SP",
+    "ITAPURA - SP",
+    "CACHOEIRA PAULISTA - SP",
+    "CAIEIRAS - SP",
+    "SÃO JOÃO DA BOA VISTA - SP",
+    "POTIM - SP",
+    "CAJAMAR - SP",
+    "MACATUBA - SP",
+    "IACANGA - SP",
+    "SANTA CRUZ DA CONCEIÇÃO - SP",
+    "TORRINHA - SP",
+    "RUBINEIA - SP",
+    "TRÊS FRONTEIRAS - SP",
+    "NOVA INDEPENDÊNCIA - SP",
+    "PIRATININGA - SP",
+    "ITAPEVI - SP",
+    "SANTA MARIA DA SERRA - SP",
+    "URÂNIA - SP",
+    "GUAICARA - SP",
+    "GUARACAI - SP",
+    "JARINU - SP",
+    "BROTAS - SP",
+    "MURUTINGA DO SUL - SP",
+    "CARAPICUÍBA - SP",
+    "PIQUEROBI - SP",
+    "ALFREDO MARCONDES - SP",
+    "AVANHANDAVA - SP",
+    "CANAS - SP",
+    "PORTO FERREIRA - SP",
+    "RIBEIRÃO DOS ÍNDIOS - SP",
+    "CAIÚA - SP",
+    "EMILIANÓPOLIS - SP",
+    "PIRAJUÍ - SP",
+    "RUBIACEA - SP",
+    "SANTANA DA PONTE PENSA - SP",
+    "FRANCISCO MORATO - SP",
+    "LAVÍNIA - SP",
+    "LAVRINHAS - SP",
+    "PIRAPORA DO BOM JESUS - SP",
+    "SANTA SALETE - SP",
+    "TANABI - SP",
+    "VARGEM GRANDE PAULISTA - SP",
+    "NOVA ODESSA - SP",
+    "SANTO EXPEDITO - SP",
+    "BENTO DE ABREU - SP",
+    "SANTANA DE PARNAÍBA - SP",
+    "ARARAS - SP",
+    "JANDIRA - SP"
+]
 
 
 # CIDADES DA OPERADORA GIGA+ - INTERNET
@@ -348,8 +517,12 @@ def get_api_url_vero(cidade):
 
     if cidade in CITIES_API_OURO:
         urls.append("https://workflow-solucoes.onrender.com/webhook/workflowouro")
-    if cidade in CITIES_API_OFERTA_SPECIAL:
-        urls.append("https://workflow-solucoes.onrender.com/webhook/workflowofertaspecial")
+    if cidade in CITYES_API_GRAFENO_75:
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_grafeno_75")
+    if cidade in CITYES_API_GRAFENO_80:
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_grafeno_80")
+    if cidade in CITIES_API_SAFIRA:
+        urls.append("https://workflow-solucoes.onrender.com/webhook/workflow_safira")
     if cidade in CITIES_API_PADRAO:
         urls.append("https://workflow-solucoes.onrender.com/webhook/workflowpadrao")
     if cidade in CITIES_API_REDE_NEUTRA:
