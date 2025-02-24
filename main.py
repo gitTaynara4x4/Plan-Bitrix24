@@ -604,4 +604,4 @@ def update_plan_vero(entity_id):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5711)
+    app.run(host='0.0.0.0', port=1473)
