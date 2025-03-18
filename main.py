@@ -422,7 +422,7 @@ CITIES_API_VERO_SAFIRA = [
     "SAO JOSE DOS CAMPOS - SP",
     "SAO PAULO - SP",
     "SUZANO - SP",
-    "VALPARAÍSO DE GOIAS - GO",
+    "VALPARAÍSO DE GOIÁS - GO",
     "JUIZ DE FORA - MG",
     "MAQUINÉ - RS",
     "TRAMANDAÍ - RS",
